@@ -1,0 +1,10 @@
+---
+
+registrydistrib_namespace: "{{ kubernetes_namespace | default('default') }}"
+registrydistrib_config_dir: "{{ kubernetes_namespace_dir }}/registrydistrib"
+registry_tolerate_master: true
+#registrydistrib_name:
+#registrydistrib_target:
+#registrydistrib_ca_file:
+
+...

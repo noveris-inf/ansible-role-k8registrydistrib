@@ -1,0 +1,30 @@
+---
+
+- name: Create registrydistrib config directory
+  command: "mkdir -p {{ registrydistrib_config_dir }}"
+
+- name: Registry location
+  file:
+    state: directory
+    path: "{{ registrydistrib_config_dir }}"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: Read registry ca certificate
+  slurp:
+    src: "{{ registrydistrib_ca_file }}"
+  register: registrydistrib_ca_data
+
+- name: Copy registrydistrib config
+  template:
+    src: registrydistrib.yaml.j2
+    dest: "{{ registrydistrib_config_dir }}/registrydistrib.yml"
+    owner: root
+    group: root
+    mode: 0640
+
+- name: Apply registrydistrib resources
+  command: "kubectl apply -f {{ registrydistrib_config_dir }}/registrydistrib.yml"
+
+...
